@@ -9,9 +9,9 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     OPENAI_API_KEY: str
 
-  @field_validator("ALLOWED_ORIGINS")
-  def validate_allowed_origins(cls, v: str) -> List[str]:
-    return v.split(",") if v else []
+    @field_validator("ALLOWED_ORIGINS")
+    def validate_allowed_origins(cls, v: str) -> List[str]:
+        return v.split(",") if v else []
 
     class Config:
         env_file = ".env"

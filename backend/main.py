@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from core.config import settings
 
+
 app = FastAPI(
     title="choicecraft",
     description="api to generate cool stories based on user choices",

@@ -11,7 +11,7 @@ class StoryNodeBase(BaseModel):
     is_ending: bool = False
     is_winninng_ending: bool = False
 
-class CompleteStoryNode(StoryNodeBase):
+class CompleteStoryNodeResponse(StoryNodeBase):
     id: int
     options: List[StoryOptionSchema] = []
 
@@ -31,7 +31,7 @@ class StoryBase(BaseModel):
 class CreateStoryRequest(BaseModel):
     theme: str
     
-class CompleteStoryResponse(BaseModel):
+class CompleteStoryResponse(StoryBase):
     id: int
     created_at: datetime
     root_node: CompleteStoryNodeResponse

@@ -7,6 +7,7 @@ from db.database import get_db, SessionLocal
 from models.story import Story, StoryNode
 from schemas.story import StoryBase, StoryNodeBase, CreateStoryRequest, CompleteStoryResponse
 from schemas.job import StoryJobResponse
+from models.job import StoryJob
 
 
 router = APIRouter(
@@ -24,6 +25,7 @@ def get_session_id(session_id: Optional[str] = Cookie(None)) -> str:
 def create_story(request: CreateStoryRequest, background_tasks: BackgroundTasks, response: Response, session_id: str = Depends(get_session_id), db: Session = Depends(get_db)) -> StoryJobResponse:
     response.set_cookie(key="session_id", value=session_id, httponly=True)
     job_id = str(uuid.uuid4())
+  
     job = StoryJob(
         job_id=job_id,
         session_id=session_id,
@@ -34,7 +36,7 @@ def create_story(request: CreateStoryRequest, background_tasks: BackgroundTasks,
     db.commit()
 
     background_tasks.add_task(generate_story_task, job_id, session_id, request.theme)
-    return job_id
+    return job
 
 
 
@@ -52,8 +54,8 @@ def generate_story_task(job_id: str, session_id: str, theme: str, db: Session = 
         job.status = "processing"
         db.commit()
 
-        story = {} 
-        job.story_id = story.id
+        story = {}  # TODO: remove this
+        job.story_id = 1 # TODO: remove this
         job.status = "completed"
         job.completed_at = datetime.now()
         db.commit()

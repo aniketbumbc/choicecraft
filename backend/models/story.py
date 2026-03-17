@@ -10,7 +10,7 @@ class Story(Base):
     title = Column(String, index=True)
     session_id = Column(String, index=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
-    nodes = relationship("Node", back_populates="story")
+    nodes = relationship("StoryNode", back_populates="story")
     
 
 class StoryNode(Base):
@@ -22,6 +22,6 @@ class StoryNode(Base):
     content = Column(String)    
     is_ending = Column(Boolean, default=False)
     is_root = Column(Boolean, default=False)
-    is_winninng_ending = Column(Boolean, default=False)
+    is_winning_ending = Column(Boolean, default=False)
     options = Column(JSON,default = list)
    
